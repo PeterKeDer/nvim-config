@@ -1,0 +1,53 @@
+
+snippet example "Example Snippet"
+The snippet's content
+endsnippet
+
+snippet div "Div"
+<div>$1</div>$0
+endsnippet
+
+snippet today "Date"
+`date +%F`
+endsnippet
+
+snippet box "Box"
+`!p snip.rv = '┌' + '─' * (len(t[1]) + 2) + '┐'`
+│ $1 │
+`!p snip.rv = '└' + '─' * (len(t[1]) + 2) + '┘'`
+$0
+endsnippet
+
+snippet html1 "HTML Document"
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>${1:Page Title}</title>
+		<link rel="stylesheet" type="text/css" href="${2:main}.css">
+	</head>
+	<body>
+		<h1>$1</h1>
+		$0
+	</body>
+</html>
+endsnippet
+
+snippet 't:([A-Za-z0-9\-]+)([\.\#])([A-Za-z0-9\-]+)' "Create tag" br 
+`!p
+tag_attr = 'class' if match.group(2) == '.' else 'id'
+snip.rv = '<' + match.group(1) + ' ' + tag_attr + '="' + match.group(3) + '">'
+`$1`!p
+snip.rv = '</' + match.group(1) + '>'
+`$0
+endsnippet
+
+snippet '([uo]l)\*([1-9][0-9]*)' "List" br
+`!p snip.rv = '<ul>' if match.group(1) == 'ul' else '<ol>'`
+	<li>$1</li>`!p
+snip >> 1
+for _ in range(int(match.group(2)) - 1):
+	snip += '<li>' + t[1] + '</li>' 
+`
+`!p snip.rv = '</ul>' if match.group(1) == 'ul' else '</ol>'`
+$0
+endsnippet
